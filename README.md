@@ -7,4 +7,4 @@ complete record
 
 -Trying to progress to achieve the target.
 
--I am using python library "opencv2" as it comfortable in terms of code complexity.others are using 'java-videoCapture','matlab',etc..
+-I am using python library "opencv2" as it comfortable in terms of code complexity.others ways are 'java-videoCapture','matlab',etc..
