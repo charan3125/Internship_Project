@@ -9,43 +9,57 @@ aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_50)
 #obj detecting
 detector = HomogeneousBgDetector()
 
-#load image
-img = cv2.imread("phone_aruco_marker.jpg")
+#load cap
+cap = cv2.VideoCapture('http://192.168.0.108:8080/video')
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
-corners, _, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
+while True:
+	_, img = cap.read()
 
-#draw polygon around marker
-int_corners = np.int0(corners)
-cv2.polylines(img, int_corners, True, (0, 255, 0), 5)
+	#get aruco marker
+	corners, _, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
 
-#aruco perimeter
-aruco_perimeter = cv2.arcLength(corners[0], True)
+	if corners:
 
-#pixel to cm ratio
-pixel_cm_ratio = aruco_perimeter / 20
+		#draw polygon around marker
+		int_corners = np.int0(corners)
+		cv2.polylines(img, int_corners, True, (0, 255, 0), 5)
 
-counters = detector.detect_objects(img)
+		#aruco perimeter
+		aruco_perimeter = cv2.arcLength(corners[0], True)
 
-#drawing the obj boundaries
-for ct in counters:
-	
+		#pixel to cm ratio
+		pixel_cm_ratio = aruco_perimeter / 20
 
-	#making into rectangle
-	rectangle = cv2.minAreaRect(ct)
-	(x, y), (w, h), angle = rectangle
+		counters = detector.detect_objects(img)
 
-	#converting width and height of obj by applying ratio pixel to cm
-	object_width = w / pixel_cm_ratio
-	object_height = h / pixel_cm_ratio
+		#drawing the obj boundaries
+		for ct in counters:
+			
 
-	#displaying
-	box = cv2.boxPoints(rectangle)
-	box = np.int0(box)
+			#making into rectangle
+			rectangle = cv2.minAreaRect(ct)
+			(x, y), (w, h), angle = rectangle
 
-	cv2.circle(img, (int(x), int(y)), 5, (0, 0, 255), -1)
-	cv2.polylines(img, [box], True, (255, 0, 0), 2)
-	cv2.putText(img, "Width {} cm".format(round(object_width, 1)), (int(x - 50), int(y - 20)), cv2.FONT_HERSHEY_PLAIN, 1, (100, 200, 0), 2)
-	cv2.putText(img, "Length {} cm".format(round(object_height, 1)), (int(x - 50), int(y + 20)), cv2.FONT_HERSHEY_PLAIN, 1, (100, 200, 0), 2)
+			#converting width and height of obj by applying ratio pixel to cm
+			object_width = w / pixel_cm_ratio
+			object_height = h / pixel_cm_ratio
 
-cv2.imshow("Image",img)
-cv2.waitKey(0)
+			#displaying
+			box = cv2.boxPoints(rectangle)
+			box = np.int0(box)
+
+			cv2.circle(img, (int(x), int(y)), 5, (0, 0, 255), -1)
+			cv2.polylines(img, [box], True, (255, 0, 0), 2)
+			cv2.putText(img, "Width {} cm".format(round(object_width, 1)), (int(x - 50), int(y - 20)), cv2.FONT_HERSHEY_PLAIN, 1, (100, 200, 0), 2)
+			cv2.putText(img, "Length {} cm".format(round(object_height, 1)), (int(x - 50), int(y + 20)), cv2.FONT_HERSHEY_PLAIN, 1, (100, 200, 0), 2)
+
+	cv2.imshow("Image",img)
+	key = cv2.waitKey(1)
+
+	if key == 27:
+		break
+
+cap.release()
+cv2.destroyALLWindows()
