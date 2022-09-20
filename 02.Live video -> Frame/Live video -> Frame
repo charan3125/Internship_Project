@@ -19,7 +19,7 @@ if result:
 
 	# showing result, it take frame name and image
 	# output
-	cv2.imshow("GeeksForGeeks", image)
+	cv2.imshow("demo", image)
 
 	# saving image in local storage
 	cv2.imwrite("Cherry.png", image)
