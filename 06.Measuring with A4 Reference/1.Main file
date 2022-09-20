@@ -1,7 +1,6 @@
 import cv2
 import utlis
  
-###################################
 webcam = True
 path = '1.jpg'
 cap = cv2.VideoCapture(1)
@@ -11,7 +10,7 @@ cap.set(4,1080)
 scale = 3
 wP = 210 *scale
 hP= 297 *scale
-###################################
+
  
 while True:
     if webcam:success,img = cap.read()
