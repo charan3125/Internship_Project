@@ -6,7 +6,7 @@ detector = HomogeneousBgDetector()
 
 pixel_cm_ratio = float(input("enter pixel per cm ratio(upto 2 decimals)"))
 
-img = cv2.imread("5cm.jpg")
+img = cv2.imread()#image file name
 
 counters = detector.detect_objects(img)
 
