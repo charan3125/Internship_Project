@@ -1,0 +1,24 @@
+import cv2
+from object_detector1 import *
+import numpy as np
+
+detector = HomogeneousBgDetector()
+
+object_height = int(input('enter object height'))
+
+img = cv2.imread("3cm.jpg")
+
+counters = detector.detect_objects(img)
+
+for ct in counters:
+	
+
+	#making into rectangle
+	rectangle = cv2.minAreaRect(ct)
+	(x, y), (w, h), angle = rectangle
+
+	#converting width and height of obj by applying ratio pixel to cm
+	
+	pixel_cm_ratio = h / object_height
+print(pixel_cm_ratio)
+cv2.waitKey(0)
