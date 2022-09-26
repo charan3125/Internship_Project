@@ -38,7 +38,7 @@ cnts = imutils.grab_contours(cnts)
 (cnts, _) = contours.sort_contours(cnts)
 
 orig = image.copy()
-box = cv2.minAreaRect(c)
+box = cv2.minAreaRect(cnts)
 box = cv2.cv.BoxPoints(box) if imutils.is_cv2() else cv2.boxPoints(box)
 box = np.array(box, dtype="int")
 
