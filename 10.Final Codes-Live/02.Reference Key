@@ -4,33 +4,21 @@ import numpy as np
 
 detector = HomogeneousBgDetector()
 
-object_height = float(input('enter object height'))
+object_height = int(input('enter object height'))
 
-#load cap
-cap = cv2.VideoCapture()#cam address
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+img = cv2.imread()#image file name
 
-while True:
-	_, img = cap.read()
+counters = detector.detect_objects(img)
 
-	counters = detector.detect_objects(img)
-
-	for ct in counters:
+for ct in counters:
 	
 
-		#making into rectangle
-		rectangle = cv2.minAreaRect(ct)
-		(x, y), (w, h), angle = rectangle
+	#making into rectangle
+	rectangle = cv2.minAreaRect(ct)
+	(x, y), (w, h), angle = rectangle
 
-		#converting width and height of obj by applying ratio pixel to cm
+	#converting width and height of obj by applying ratio pixel to cm
 	
-		pixel_cm_ratio = h / object_height
-	print(pixel_cm_ratio)
-	key = cv2.waitKey(1)
-
-	if key == 27:
-		break
-
-cap.release()
-cv2.destroyALLWindows()
+	pixel_cm_ratio = h / object_height
+print(pixel_cm_ratio)
+cv2.waitKey(0)
