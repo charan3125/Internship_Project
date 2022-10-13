@@ -8,3 +8,4 @@ complete record
 -Trying to progress to achieve the target.
 
 -I am using python library "opencv2" as it comfortable in terms of code complexity.others ways are 'java-videoCapture','matlab',etc..
+detailed link- https://drive.google.com/drive/folders/1lHqKq7v7NijvsnDoksotgL2v3Idk_C2q?usp=sharing
